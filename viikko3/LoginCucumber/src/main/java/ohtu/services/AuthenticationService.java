@@ -15,8 +15,7 @@ public class AuthenticationService {
 
     public boolean logIn(String username, String password) {
         for (User user : userDao.listAll()) {
-            if (user.getUsername().equals(username)
-                    && user.getPassword().equals(password)) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return true;
             }
         }
@@ -40,7 +39,21 @@ public class AuthenticationService {
 
     private boolean invalid(String username, String password) {
         // validity check of username and password
-
-        return false;
+        boolean notvalid = false;
+        boolean numberOrSpecial = false;
+        if (!username.matches("^[a-z]{3,}$")) {
+            notvalid = true;
+        }
+        if (password.length() < 8) {
+            notvalid = true;
+        }
+        if (password.matches("(.*[0-9].*)")) {
+            numberOrSpecial = true;
+        }
+        if(password.matches("(.*[@,#,$,%].*$)")){
+            numberOrSpecial = true;
+        }
+        if(!numberOrSpecial) notvalid = true;
+        return notvalid;
     }
 }
