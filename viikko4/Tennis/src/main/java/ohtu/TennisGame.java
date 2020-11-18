@@ -1,7 +1,7 @@
 package ohtu;
 
 public class TennisGame {
-    
+
     private int m_score1 = 0;
     private int m_score2 = 0;
     private String player1Name;
@@ -19,58 +19,71 @@ public class TennisGame {
             m_score2 += 1;
     }
 
+    public String tie(int i) {
+        String s = "";
+        switch (i) {
+            case 0:
+                s = "Love-All";
+                break;
+            case 1:
+                s = "Fifteen-All";
+                break;
+            case 2:
+                s = "Thirty-All";
+                break;
+            case 3:
+                s = "Forty-All";
+                break;
+            default:
+                s = "Deuce";
+                break;
+
+        }
+        return s;
+    }
+
+    public String tieBreaker(int m_score1, int m_score2) {
+        String s = "";
+        int minusResult = m_score1 - m_score2;
+        if (minusResult == 1)
+            s = "Advantage player1";
+        else if (minusResult == -1)
+            s = "Advantage player2";
+        else if (minusResult >= 2)
+            s = "Win for player1";
+        else
+            s = "Win for player2";
+
+        return s;
+    }
+
     public String getScore() {
         String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                case 3:
-                        score = "Forty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
-        }
-        else if (m_score1>=4 || m_score2>=4)
-        {
-            int minusResult = m_score1-m_score2;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
-        }
-        else
-        {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
+        int tempScore = 0;
+        if (m_score1 == m_score2) {
+            score = tie(m_score1);
+        } else if (m_score1 >= 4 || m_score2 >= 4) {
+            score = tieBreaker(m_score1, m_score2);
+        } else {
+            for (int i = 1; i < 3; i++) {
+                if (i == 1)
+                    tempScore = m_score1;
+                else {
+                    score += "-";
+                    tempScore = m_score2;
+                }
+                switch (tempScore) {
                     case 0:
-                        score+="Love";
+                        score += "Love";
                         break;
                     case 1:
-                        score+="Fifteen";
+                        score += "Fifteen";
                         break;
                     case 2:
-                        score+="Thirty";
+                        score += "Thirty";
                         break;
                     case 3:
-                        score+="Forty";
+                        score += "Forty";
                         break;
                 }
             }
