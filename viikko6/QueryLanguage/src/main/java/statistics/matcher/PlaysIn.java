@@ -10,7 +10,12 @@ public class PlaysIn implements Matcher {
         this.team = team;
     }        
     
-    @Override
+    public PlaysIn(Matcher matcher, String string) {
+        matcher = new And(matcher);
+        this.team = team;
+	}
+
+	@Override
     public boolean matches(Player p) {
         return p.getTeam().contains(team);
     }
